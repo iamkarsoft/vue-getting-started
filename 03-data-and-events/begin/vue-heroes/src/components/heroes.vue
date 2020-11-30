@@ -25,23 +25,23 @@
               </div>
               <div class="field">
                 <label class="label" for="description">description</label>
-                <textarea class="input" id="description" type="text" />
+                <textarea class="input" id="description" v-model="hero.description" type="text" />
               </div>
               <div class="field">
                 <label class="label">cape color</label>
                 <label class="radio" for="color-red">
-                  <input type="radio" id="color-red" value="red" />
+                  <input type="radio" id="color-red" v-model="hero.capeColor" value="red" />
                   red
                 </label>
                 <label class="radio" for="color-blue">
-                  <input type="radio" id="color-blue" value="blue" />
+                  <input type="radio" id="color-blue" v-model="hero.capeColor" value="blue" />
                   blue
                 </label>
                 <label class="radio" for="color-green">
-                  <input type="radio" id="color-green" value="green" />
+                  <input type="radio" id="color-green" v-model="hero.capeColor" value="green" />
                   green
                 </label>
-                <div class="color-line"></div>
+                <div class="color-line" :style="{'background-color': hero.capeColor}"></div>
               </div>
               <div class="field">
                 <label for="power">
@@ -60,7 +60,7 @@
               <div class="field">
                 <label class="checkbox" for="active">
                   active
-                  <input type="checkbox" class="is-primary" id="active" />
+                  <input type="checkbox" class="is-primary" v-model="hero.active" id="active" />
                 </label>
               </div>
             </div>
