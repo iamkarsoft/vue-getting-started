@@ -16,7 +16,7 @@
                 @click="selectHero(hero)"
                 :class="{ 'is-active': selectedHero === hero }"
               >
-                <span>{{ hero.fullName }}</span>
+                <span>{{ hero.firstName }}</span>
               </a>
             </li>
           </ul>
@@ -27,7 +27,7 @@
       <div class="column is-4" v-if="selectedHero">
         <div class="card">
           <header class="card-header">
-            <p class="card-header-title">{{ selectedHero.firstName }}</p>
+            <p class="card-header-title">{{ fullName }}</p>
           </header>
           <div class="card-content">
             <div class="content">
@@ -113,11 +113,11 @@ export default {
   name: 'Heroes',
   data () {
     return {
-      heroes: [],
+      heroes: ourHeroes,
       selectedHero: undefined,
       message: '',
     };
-  }
+  },
   methods: {
     handleTheCapes(newValue) {
       const value = parseInt(newValue, 10);
