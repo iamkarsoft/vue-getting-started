@@ -61,6 +61,18 @@
                   v-model="selectedHero.description"
                 />
               </div>
+               <div class="field">
+                <label class="label" for="capecounter">cape counter</label>
+                <input
+                  class="input"
+                  id="capecounter"
+                  v-model="selectedHero.capeCounter"
+                />
+              </div>
+                      <div class="field">
+                <label class="label" for="capeMessage">cape message</label>
+              <label for="capeMessage" class="input" name="capeMessage">{{capeMessage}}</label>
+              </div>
             </div>
           </div>
           <footer class="card-footer">
@@ -88,48 +100,52 @@ const ourHeroes = [
     id: 10,
     firstName: 'Ella',
     lastName: 'Papa',
+    capeCounter: 1,
     description: 'fashionista',
   },
   {
     id: 20,
     firstName: 'Madelyn',
     lastName: 'Papa',
+    capeCounter: 3,
     description: 'the cat whisperer',
   },
   {
     id: 30,
     firstName: 'Haley',
     lastName: 'Papa',
+    capeCounter: 2,
     description: 'pen wielder',
   },
   {
     id: 40,
     firstName: 'Landon',
     lastName: 'Papa',
+    capeCounter: 1,
     description: 'arc trooper',
   },
 ];
 export default {
   name: 'Heroes',
-  data () {
+  data() {
     return {
       heroes: [],
       selectedHero: undefined,
       message: '',
+      capeMessage:'',
     };
   },
   methods: {
-    async getHeroes(){
-      return new Promise(resolve=>{
-        setTimeout(()=>resolve(ourHeroes),1500);
+    async getHeroes() {
+      return new Promise(resolve => {
+        setTimeout(() => resolve(ourHeroes), 1500);
       });
     },
-
     async loadHeroes() {
       this.heroes = [];
-      this.message= 'getting the heroes, please be patient';
+      this.message = 'getting the heroes, please be patient';
       this.heroes = await this.getHeroes();
-      this.message='';
+      this.message = '';
     },
     handleTheCapes(newValue) {
       const value = parseInt(newValue, 10);
@@ -161,13 +177,20 @@ export default {
     },
   },
   computed: {
-    fullName () {
+    fullName() {
       return `${this.selectedHero.firstName} ${this.selectedHero.lastName}`;
-    }
+    },
   },
-  created(){
+  created() {
     this.loadHeroes();
   },
-
+  watch: {
+    'selectedHero.capeCounter': {
+        immediate: true,
+        handler(newValue, oldValue){
+          this.handleTheCapes(newValue);
+      },
+    },
+  },
 };
 </script>
