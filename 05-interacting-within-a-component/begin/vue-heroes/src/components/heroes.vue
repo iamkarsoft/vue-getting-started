@@ -16,7 +16,7 @@
                 @click="selectHero(hero)"
                 :class="{ 'is-active': selectedHero === hero }"
               >
-                <span>{{ hero.firstName }}</span>
+                <span>{{ hero.fullName }}</span>
               </a>
             </li>
           </ul>
@@ -111,6 +111,13 @@ const ourHeroes = [
 ];
 export default {
   name: 'Heroes',
+  data () {
+    return {
+      heroes: [],
+      selectedHero: undefined,
+      message: '',
+    };
+  }
   methods: {
     handleTheCapes(newValue) {
       const value = parseInt(newValue, 10);
@@ -141,5 +148,10 @@ export default {
       this.selectedHero = hero;
     },
   },
+  computed: {
+    fullName () {
+      return `${this.selectedHero.firstName} ${this.selectedHero.lastName}`;
+    }
+  }
 };
 </script>
