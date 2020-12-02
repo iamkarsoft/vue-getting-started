@@ -61,7 +61,7 @@
 
 import { format } from 'date-fns';
 
-import { displayDateFormat } from '../shared';
+import { displayDateFormat, lifecycleHooks } from '../shared';
 
 export default {
     name: 'HeroDetail',
@@ -73,12 +73,12 @@ export default {
     },
     computed: {
         fullName() {
-            return this.hero ?
-                `${this.hero.firstName} ${this.hero.lastName}` :
+            return this.clonedHero ?
+                `${this.clonedHero.firstName} ${this.clonedHero.lastName}` :
                 '';
         },
     },
-
+    mixins: [lifecycleHooks],
     methods: {
         handleTheCapes(newValue) {
             const value = parseInt(newValue, 10);
@@ -98,10 +98,11 @@ export default {
             }
         },
         cancelHero(){
+        	this.$emit('cancel');
 
         },
         saveHero(){
-
+        	this.$emit('save',this.clonedHero);
         },
     },
      watch: {
@@ -109,7 +110,7 @@ export default {
       immediate: true,
       handler(newValue, oldValue) {
         console.log(
-          `CapeCounter watcher evalauted. old=${oldValue}, new=${newValue}`
+          `CapeCounter watcher evaluated. old=${oldValue}, new=${newValue}`
         );
         this.handleTheCapes(newValue);
       },

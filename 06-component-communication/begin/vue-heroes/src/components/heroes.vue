@@ -32,7 +32,9 @@
             <ul v-if="!selectedHero">
             </ul>
           <!-- <hero-detail> -->
-            <HeroDetail v-if="selectedHero" :hero="selectedHero"/>
+            <HeroDetail v-if="selectedHero" :hero="selectedHero"
+              @cancel="cancelHero" @save="saveHero"
+            />
       
           <!-- </hero-detail> -->
 
@@ -45,7 +47,7 @@
 
 <script>
 
-import {  ourHeroes } from '../shared';
+import {  ourHeroes, lifecycleHooks, heroWatchers } from '../shared';
 import HeroDetail from '@/components/hero-detail';
 export default {
   name: 'Heroes',
@@ -60,8 +62,8 @@ export default {
   created() {
     this.loadHeroes();
   },
-
   components: { HeroDetail },
+  mixis: [lifecycleHooks, heroWatchers],
   methods: {
     async getHeroes() {
       return new Promise(resolve => {
@@ -77,9 +79,9 @@ export default {
     cancelHero() {
       this.selectedHero = undefined;
     },
-    saveHero() {
-      const index = this.heroes.findIndex(h => h.id === this.selectedHero.id);
-      this.heroes.splice(index, 1, this.selectedHero);
+    saveHero(hero) {
+      const index = this.heroes.findIndex(h => h.id === this.hero.id);
+      this.heroes.splice(index, 1, this.hero);
       this.heroes = [...this.heroes];
       this.selectedHero = undefined;
     },
