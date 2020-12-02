@@ -29,8 +29,10 @@
             </li>
           </ul>
           <!-- <heroes-list> -->
-
+            <ul v-if="!selectedHero">
+            </ul>
           <!-- <hero-detail> -->
+            <HeroDetail v-if="selectedHero" :hero="selectedHero"/>
           <div v-if="selectedHero">
             <div class="card">
               <header class="card-header">
@@ -126,7 +128,7 @@
 import { format } from 'date-fns';
 
 import { displayDateFormat, ourHeroes } from '../shared';
-
+import HeroDetail from '@/components/hero-detail';
 export default {
   name: 'Heroes',
   data() {
@@ -147,6 +149,7 @@ export default {
         : '';
     },
   },
+  components: { HeroDetail },
   methods: {
     async getHeroes() {
       return new Promise(resolve => {
