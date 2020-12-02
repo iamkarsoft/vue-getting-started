@@ -61,6 +61,16 @@
                   v-model="selectedHero.description"
                 />
               </div>
+
+               <div class="field">
+                <label class="label" for="originDate">Origin Date</label>
+                <input
+                  class="input"
+                  id="origindate"
+                  v-model="selectedHero.originDate"
+                />
+                <p class="comment">{{selectedHero.originDate | shortDate}}</p>
+              </div>
                <div class="field">
                 <label class="label" for="capecounter">cape counter</label>
                 <input
@@ -95,12 +105,16 @@
 </template>
 
 <script>
+import { format } from 'date-fns';
+const inputDateFormat = 'YYYY-MM-DD';
+const displayDateFormat = 'MMM DD, YY';
 const ourHeroes = [
   {
     id: 10,
     firstName: 'Ella',
     lastName: 'Papa',
     capeCounter: 1,
+    originDate: format(new Date(1995, 8, 21), inputDateFormat),
     description: 'fashionista',
   },
   {
@@ -108,6 +122,7 @@ const ourHeroes = [
     firstName: 'Madelyn',
     lastName: 'Papa',
     capeCounter: 3,
+    originDate: format(new Date(1995, 7,26), inputDateFormat),
     description: 'the cat whisperer',
   },
   {
@@ -115,6 +130,7 @@ const ourHeroes = [
     firstName: 'Haley',
     lastName: 'Papa',
     capeCounter: 2,
+    originDate: format(new Date(1945, 4,21), inputDateFormat),
     description: 'pen wielder',
   },
   {
@@ -122,6 +138,7 @@ const ourHeroes = [
     firstName: 'Landon',
     lastName: 'Papa',
     capeCounter: 1,
+    originDate: format(new Date(1935, 7,21), inputDateFormat),
     description: 'arc trooper',
   },
 ];
@@ -133,6 +150,7 @@ export default {
       selectedHero: undefined,
       message: '',
       capeMessage:'',
+      originDate: '',
     };
   },
   methods: {
@@ -188,8 +206,14 @@ export default {
     'selectedHero.capeCounter': {
         immediate: true,
         handler(newValue, oldValue){
-          this.handleTheCapes(newValue);
+        this.handleTheCapes(newValue);
       },
+    },
+  },
+  filters: {
+    shortDate: function(value) {
+      // body...
+      return format(value, displayDateFormat);
     },
   },
 };
