@@ -38,6 +38,8 @@ const ourHeroes = [
 ];
 
 const getHeroes = async function() {
+  try{
+
   const response = await axios.get(`${API}/heroes.json`);
   const heroes = response.data.map(h =>{
     h.originDate = format(h.originDate, inputDateFormat);
@@ -45,6 +47,10 @@ const getHeroes = async function() {
     return h;
   });
   return heroes;
+  } catch (error){
+    console.error(error);
+    return [];
+  }
 }
 
 export const data = {
